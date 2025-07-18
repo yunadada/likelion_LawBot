@@ -6,7 +6,7 @@ const DView = () => {
     <div className="background">
       <div className="container">
         <div className="title">
-          <h2>📘 내 문서 목록 조회</h2>
+          <h3>📘 내 문서 목록 조회</h3>
           <button> 문서 업로드</button>
         </div>
         <div className="content">

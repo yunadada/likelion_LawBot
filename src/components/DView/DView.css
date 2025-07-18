@@ -13,8 +13,8 @@
   align-items: center;
   flex-direction: column;
   padding: 28px;
-  width: 68%;
-  height: 68%;
+  width: 64%;
+  height: 64%;
 }
 
 .title {
@@ -27,7 +27,7 @@
   padding-bottom: 20px;
 }
 
-.title > h2 {
+.title > h3 {
   margin: 0;
 }
 
@@ -35,8 +35,9 @@
   background-color: #09bcff;
   color: white;
   border: none;
-  padding: 10px 40px;
+  padding: 8px 32px;
   border-radius: 8px;
+  font-size: 10px;
 }
 
 .content {
@@ -47,7 +48,7 @@
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 10px;
 }
 
 .table > thead {
@@ -57,7 +58,7 @@
 }
 
 .table th {
-  padding: 14px;
+  padding: 12px;
   font-weight: 100;
 }
 
@@ -75,12 +76,12 @@
 }
 
 .table td {
-  padding: 14px;
+  padding: 8px;
   border-bottom: 1px solid #d0d5dd;
 }
 
 .downloadButton {
-  padding-left: 20px;
+  padding-left: 14px;
   background-color: transparent;
   border: none;
 }
