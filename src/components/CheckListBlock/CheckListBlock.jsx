@@ -5,15 +5,15 @@ import { ImCheckboxChecked } from "react-icons/im";
 const CheckListBlock = () => {
   return (
     <div className="checkListBlcok">
-      <table className="checkListTable">
+      <table className="checkListTable" role="table" aria-label="체크리스트">
         <colgroup>
           <col style={{ width: "80%" }} />
           <col style={{ width: "20%" }} />
         </colgroup>
-        <thead>
-          <tr>
-            <th>체크 항목</th>
-            <th>체크 박스</th>
+        <thead role="rowgroup">
+          <tr role="row">
+            <th scope="col">체크 항목</th>
+            <th scope="col">체크 박스</th>
           </tr>
         </thead>
         <tbody>
