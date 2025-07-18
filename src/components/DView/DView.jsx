@@ -6,11 +6,11 @@ const DView = () => {
     <div className="background">
       <div className="container">
         <div className="title">
-          <h3>📘 내 문서 목록 조회</h3>
+          <h2>📘 내 문서 목록 조회</h2>
           <button> 문서 업로드</button>
         </div>
         <div className="content">
-          <table className="table">
+          <table className="table" role="table" aria-label="문서 목록">
             <colgroup>
               <col style={{ width: "65%" }} />
               <col style={{ width: "25%" }} />
@@ -18,9 +18,9 @@ const DView = () => {
             </colgroup>
             <thead>
               <tr>
-                <th>파일 이름</th>
-                <th>올린 날짜</th>
-                <th>다운로드</th>
+                <th scope="col">파일 이름</th>
+                <th scope="col">올린 날짜</th>
+                <th scope="col">다운로드</th>
               </tr>
             </thead>
             <tbody>

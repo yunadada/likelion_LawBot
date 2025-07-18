@@ -31,7 +31,7 @@
 
 .modalTitle > p {
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -39,7 +39,6 @@
   border: none;
   background-color: transparent;
   font-size: 20px;
-  background-color: white;
   display: flex;
   cursor: pointer;
 }
@@ -61,7 +60,7 @@
   align-items: center;
   justify-content: center;
   background-color: #ecf0fa;
-  padding: 50px;
+  padding: 60px;
   border: 1.2px dashed #0162e8;
   border-radius: 10px;
   box-sizing: border-box;
@@ -72,19 +71,19 @@
   background-color: transparent;
   border: 1.2px solid #0162e8;
   border-radius: 10px;
-  padding: 6px 24px;
+  padding: 8px 26px;
   color: #0162e8;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .docs {
   width: 100%;
   border: 1.2px solid #0162e8;
-  padding: 8px;
+  padding: 10px;
   box-sizing: border-box;
   border-radius: 10px;
-  font-size: 10px;
+  font-size: 12px;
   margin-bottom: 12px;
 }
 
@@ -98,9 +97,9 @@
 .uploadButton > button {
   background-color: #0162e8;
   color: white;
-  padding: 6px 16px;
+  padding: 8px 18px;
   border: none;
   border-radius: 8px;
-  font-size: 10px;
+  font-size: 12px;
   cursor: pointer;
 }
