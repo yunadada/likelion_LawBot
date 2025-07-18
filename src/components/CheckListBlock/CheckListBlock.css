@@ -1,0 +1,44 @@
+.checkListBlock {
+  flex: 1;
+}
+
+.checkListTable {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 10px;
+}
+
+.checkListTable > thead {
+  background-color: #364261;
+  color: white;
+  text-align: left;
+}
+
+.checkListTable th {
+  padding: 12px;
+  font-weight: 100;
+}
+
+.checkListTable thead tr:first-child th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.checkListTable thead tr:first-child th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.checkListTable > tbody {
+  border: 1px solid #d0d5dd;
+  border-top: none;
+}
+
+.checkListTable td {
+  padding: 12px;
+  border-bottom: 1px solid #d0d5dd;
+}
+
+.checkListTable td > svg {
+  padding-left: 14px;
+  display: flex;
+}
