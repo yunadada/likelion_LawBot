@@ -1,0 +1,81 @@
+.layoutBackground {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.leftContent {
+  width: 40%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  align-items: center;
+  box-shadow: 0 14px 28px -5px #dfe1e6;
+}
+
+.docsTitle {
+  width: 100%;
+  border-bottom: 1px solid #d0d5dd;
+  height: 48px;
+  padding: 14px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 12px;
+}
+
+.docsContents {
+  flex: 1;
+  width: 100%;
+  padding: 14px;
+  box-sizing: border-box;
+  font-size: 10px;
+}
+
+.rightContent {
+  width: 40%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  align-items: center;
+  box-shadow: 0 14px 28px -5px #dfe1e6;
+}
+
+.tapBar {
+  width: 100%;
+  border-bottom: 1px solid #d0d5dd;
+  height: 48px;
+  padding: 8px 14px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.item {
+  background-color: white;
+  border: 1px solid #d0d5dd;
+  color: #d0d5dd;
+  border-radius: 20px;
+  padding: 8px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.item:focus {
+  color: black;
+  border: 1px solid black;
+}
+
+.analysisResult {
+  flex: 1;
+  width: 100%;
+  padding: 14px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
