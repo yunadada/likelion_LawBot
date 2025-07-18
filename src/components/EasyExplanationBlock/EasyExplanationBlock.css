@@ -1,0 +1,31 @@
+.easyExplanationBlock {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid #d2d2d2;
+  box-sizing: border-box;
+}
+
+.risk,
+.easy,
+.recommended {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.risk > h5,
+.easy > h5,
+.recommended > h5 {
+  margin: 0;
+}
+
+.easy {
+  border-bottom: 1px solid #d2d2d2;
+}
