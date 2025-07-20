@@ -1,19 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ResultLayout.css";
 import RiskClauseBlock from "../RiskClauseBlock/RiskClauseBlock";
 import EasyExplanationBlock from "../EasyExplanationBlock/EasyExplanationBlock";
 import CheckListBlock from "../CheckListBlock/CheckListBlock";
+import { useLocation } from "react-router-dom";
 
 const ResultLayout = () => {
+  const accessToken = localStorage.getItem("accessToken");
+
+  const location = useLocation();
+  const { fileId } = location.state || {};
+
   const tapList = ["위험 조항 탐지", "쉬운 말 해석", "체크리스트"];
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const [fileName, setFileName] = useState("");
+  const [text, setText] = useState("");
+  const [riskClauses, setRiskClauses] = useState([]);
+  const [easyExplanations, setEasyExplanations] = useState([]);
 
   const riskLevelColorMap = {
     "위험도 높음": "highlight-red",
     "위험도 중간": "highlight-orange",
+    "위험도 낮음": "highlight-green",
   };
 
   const dummyRiskClauses = [
+    {
+      riskLevel: "위험도 낮음",
+      content: `계약의 사업관련 법률 시스템 조언`,
+      reason: "일방 당사자에게만 과도한 책임을 부과함",
+      legalBasis: "민법 제103조(반사회질서 법률행위)",
+    },
     {
       riskLevel: "위험도 중간",
       content: `"갑"은 지원하는 법률자문 위원이 "응"이 주관하는 프로젝트와 관련된 국가의 변 호사 자격증 또는 이에 준하는 경력을 보유한 자로 추천하여 투입하여야 하며 모든 경력을 합한 기간이 0년 이상이 되어야 한다.`,
@@ -65,47 +83,125 @@ const ResultLayout = () => {
 3) 계약조건 및 법률 조항 작성과 타당성검토
 4) 기타 법적 자문업무 일체
 
-제3조 (한정적 협력의무)
-"갑"은 지정하는 법률자료를 위임이 "을"이 추진하는 프로젝트와 관련 계약의 법적 자격조 또는 이에 준하는 절차를 법률적으로 자문하며 확인함과 해당 요건을 검토한 합리적인 여부 이상이 되어야 한다.
-"갑"은 본건의 보증을 위하여 관련 자격자를 해당 내용에 포함하지 않으며 법적 책임이 없으며, "을"의 진행에 대한 보증의무도 하지 않는다.
+"갑"은 지원하는 법률자문 위원이 "응"이 주관하는 프로젝트와 관련된 국가의 변 호사 자격증 또는 이에 준하는 경력을 보유한 자로 추천하여 투입하여야 하며 모든 경력을 합한 기간이 0년 이상이 되어야 한다.
 
-제4조 (자료의 이용)
-"을"은 매회 회의에 앞서 요청된 ㈜OOO 제공 "을"이 보낸 자료로부터 "갑"의 계획 하에 협의를 진행한다(누적기록 유지).
-제4조 조항의 계약 자문업무의 수행 중 사에는 별도 계약서를 통해 수수료를 지급받으며 이러한 수행과정은 "을"이 사전 통보 후 동의한 절차로만 가능하다.
-본 문건의 계약 진행 중 발생하는 비용 광고광고비, 숙박비, 식사 및 출장비 등은 "을"이 별도로 부담한다.
+"갑"은 본조의 보증을 위하여 관련 자격증 사본 등을 본 계약서 말미에 첨부하기로 하고 이에 대해 허위 또는 하자가 있을 시 그에 대한 모든 손해의 책임을 "갑"이 부담한다.
 `;
-
-  const highlightTargets = dummyRiskClauses.map(({ content, riskLevel }) => ({
-    phrase: String(content).trim(),
-    className: riskLevelColorMap[riskLevel],
-  }));
-
-  const getHighlightedText = (text, targets) => {};
 
   const renderComponent = () => {
     switch (selectedIndex) {
       case 0:
+        // 현재 더미 데이터 배열로 작성돼있어서 실제 연결시에는 riskClausese로 변경해야함.
         return dummyRiskClauses.map((data, index) => (
-          <RiskClauseBlock key={index} {...data} index={index} />
+          <RiskClauseBlock
+            key={data.sentenceId}
+            {...data}
+            index={index}
+            riskLevelColorMap={riskLevelColorMap}
+          />
         ));
       case 1:
         return dummyEasyExplanations.map((data, index) => (
-          <EasyExplanationBlock key={index} {...data} index={index} />
+          <EasyExplanationBlock
+            key={sentenceId}
+            {...data}
+            index={index}
+            riskLevelColorMap={riskLevelColorMap}
+          />
         ));
       case 2:
+        // 이 부분 수정해야할 듯
         return <CheckListBlock items={dummyChecklist} />;
       default:
         return null;
     }
   };
 
+  // 하이라이트 타겟 문장 추출
+  const highlightTargets = dummyRiskClauses.map(
+    ({ originalText: content, riskLevel }) => ({
+      phrase: String(content).trim(),
+      className: riskLevelColorMap[riskLevel],
+    })
+  );
+
+  // 텍스트에서 target 문장을 찾아 span으로 감싸기
+  const getHighlightedText = (text, targets) => {
+    let result = text;
+    targets.forEach(({ phrase, className }) => {
+      const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const regex = new RegExp(escaped, "g");
+      result = result.replace(
+        regex,
+        `<span class="${className}">${phrase}</span>`
+      );
+    });
+
+    // 최초 마운트 시 왼쪽 영역 텍스트와 위험 조항 데이터 받아옴
+    useEffect(() => {
+      const fetchRiskData = async () => {
+        if (!fileId) return;
+
+        try {
+          const res = await axios.get(
+            `http://localhost:8080/api/documents/${fileId}/analysis`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+
+          const data = res.data;
+          setFileName(data.fileName);
+          setText(data.improvedText);
+          setRiskClauses(data.riskAnalyses);
+        } catch (error) {
+          console.error("문서 분석 결과 불러오기 실패", error);
+        }
+      };
+
+      fetchRiskData();
+    }, [fileId]);
+
+    // 쉬운 말 해석 탭 클릭시 데이터 요청
+    useEffect(() => {
+      const fetchEasyExplanations = async () => {
+        if (selectedIndex !== 1 || easyExplanations.length > 0 || !fileId)
+          return;
+
+        try {
+          const res = await axios.get(
+            `http://localhost:8080/api/clauses/${fileId}/simple-interpretation`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+
+          setEasyExplanations(res.data.explanations || []);
+        } catch (error) {
+          console.error("쉬운 말 해석 불러오기 실패", error);
+        }
+      };
+
+      fetchEasyExplanations();
+    }, [selectedIndex, fileId, easyExplanations]);
+
+    return (
+      <div
+        className="docsContents"
+        dangerouslySetInnerHTML={{ __html: result }}
+      />
+    );
+  };
+
   return (
     <div className="layoutBackground">
       <div className="leftContent">
-        <div className="docsTitle">법률자문_계약서.docx</div>
-        <div className="docsContents">
-          {getHighlightedText(dummyText, highlightTargets)}
-        </div>
+        <div className="docsTitle">{fileName}</div>
+        {getHighlightedText(dummyText, highlightTargets)}
       </div>
       <div className="rightContent">
         <div className="tapBar">

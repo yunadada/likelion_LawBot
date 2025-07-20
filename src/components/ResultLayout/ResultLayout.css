@@ -34,7 +34,7 @@
   width: 100%;
   padding: 14px;
   box-sizing: border-box;
-  font-size: 10px;
+  font-size: 12px;
   white-space: pre-wrap;
 }
 
@@ -87,13 +87,13 @@
 }
 
 .highlight-red {
-  color: red;
-  background-color: aqua;
-  font-weight: bolder;
+  color: #b60202;
 }
 
 .highlight-orange {
-  color: orange;
-  background-color: aqua;
-  font-weight: bolder;
+  color: #ff6200;
+}
+
+.highlight-green {
+  color: #003308;
 }
