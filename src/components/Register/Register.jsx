@@ -4,58 +4,79 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-  const handleRegister = async () => {
-    if (!name || !email || !password) {
-      alert("모든 항목을 입력해주세요.");
-      return;
-    }
+    const handleRegister = async () => {
+        if (!name || !email || !password) {
+            alert("모든 항목을 입력해주세요.");
+            return;
+        }
 
-    try {
-      await axios.post("http://서버주소/api/register", {
-        name,
-        email,
-        password,
-      });
+        const nameRegex = /^[가-힣a-zA-Z]{2,}$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      alert("계정 생성이 완료 되었습니다. 로그인 페이지로 이동해주세요.");
-      navigate("/login");
-    } catch (err) {
-      console.error("계정 생성 실패:", err.response || err.message || err);
-      alert("계정 생성이 되지 않았습니다. 다시 시도해주세요.");
-    }
-  };
+        if (!nameRegex.test(name)) {
+            alert("이름은 한글 또는 영문 2자 이상이어야 합니다.");
+            return;
+        }
 
-  return (
-    <div className="auth-container">
-      <div className="auth-box">
-        <h2>계정 생성</h2>
-        <input
-          type="text"
-          placeholder="이름 입력"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="email"
-          placeholder="이메일 입력"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="비밀번호 입력"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button onClick={handleRegister}>계정 생성</button>
-      </div>
-    </div>
-  );
+        if (!emailRegex.test(email)) {
+            alert("이메일 형식이 올바르지 않습니다.");
+            return;
+        }
+
+        if (!password) {
+            alert("비밀번호를 입력해주세요.");
+            return;
+        }
+
+        try {
+            await axios.post("http://서버주소/api/register", {
+                name,
+                email,
+                password,
+            });
+
+            alert("계정 생성이 완료 되었습니다. 로그인 페이지로 이동해주세요.");
+            navigate("/login");
+        } catch (err) {
+            console.error(
+                "계정 생성 실패:",
+                err.response || err.message || err
+            );
+            alert("계정 생성이 되지 않았습니다. 다시 시도해주세요.");
+        }
+    };
+
+    return (
+        <div className="auth-container">
+            <div className="auth-box">
+                <h2>계정 생성</h2>
+                <input
+                    type="text"
+                    placeholder="이름 입력"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+                <input
+                    type="email"
+                    placeholder="이메일 입력"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                    type="password"
+                    placeholder="비밀번호 입력"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <button onClick={handleRegister}>계정 생성</button>
+            </div>
+        </div>
+    );
 };
 
 export default Register;
