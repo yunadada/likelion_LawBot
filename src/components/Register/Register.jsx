@@ -28,26 +28,31 @@ const Register = () => {
             return;
         }
 
-        if (!password) {
-            alert("비밀번호를 입력해주세요.");
-            return;
-        }
-
         try {
-            await axios.post("http://서버주소/api/register", {
-                name,
-                email,
-                password,
-            });
-
-            alert("계정 생성이 완료 되었습니다. 로그인 페이지로 이동해주세요.");
-            navigate("/login");
-        } catch (err) {
-            console.error(
-                "계정 생성 실패:",
-                err.response || err.message || err
+            const res = await axios.post(
+                "http://localhost:8080/api/v1/members/sign-up",
+                { name, email, password },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
             );
-            alert("계정 생성이 되지 않았습니다. 다시 시도해주세요.");
+
+            if (res.data.success === "true") {
+                alert(
+                    "계정 생성이 완료 되었습니다. 로그인 페이지로 이동해주세요."
+                );
+                navigate("/login");
+            } else {
+                alert("계정 생성 실패: " + res.data.message);
+            }
+        } catch (err) {
+            if (err.response?.data?.message === "이미 존재하는 유저입니다.") {
+                alert("이미 존재하는 이메일입니다.");
+            } else {
+                alert("계정 생성이 되지 않았습니다. 다시 시도해주세요.");
+            }
         }
     };
 

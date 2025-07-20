@@ -16,7 +16,7 @@ const Login = () => {
 
         try {
             const res = await axios.post(
-                "http://서버주소/api/v1/auth/sign-in",
+                "http://localhost:8080/api/v1/auth/sign-in",
                 { email, password },
                 {
                     headers: { "Content-Type": "application/json" },
