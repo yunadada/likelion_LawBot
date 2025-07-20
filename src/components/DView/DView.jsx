@@ -3,20 +3,70 @@ import "./DView.css";
 import Modal from "../Modal/Modal";
 import { IoDocumentText } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 const DView = () => {
+  const accessToken = localStorage.getItem("accessToken");
+
   const [documents, setDocuments] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const mockData = [
-      { id: 1, name: "근로계약서_최종본.docx", date: "30/12/2024" },
-      { id: 2, name: "프로젝트_기획서.pdf", date: "30/12/2024" },
-      { id: 3, name: "출근부.xlsx", date: "30/12/2024" },
-    ];
+  const dummyFiles = {
+    data: [
+      {
+        id: 261,
+        fileName: "sample_nda.pdf",
+        uploadedAt: "2025-07-20T17:42:17",
+      },
+      {
+        id: 262,
+        fileName: "sample_employ.pdf",
+        uploadedAt: "2025-07-20T17:42:17",
+      },
+      {
+        id: 263,
+        fileName: "sample_sub.pdf",
+        uploadedAt: "2025-07-20T17:42:17",
+      },
+    ],
+  };
 
-    setDocuments(mockData);
+  useEffect(() => {
+    setDocuments(formattedDocs);
+
+    // 실제 요청
+    // const fetchDocsData = async () => {
+    //   try {
+    //     const res = await axios.get("/api/documents", {
+    //       headers: {
+    //         Authorization: `Bearer ${accessToken}`,
+    //       },
+    //     });
+    //     console.log("응답: ", res.data);
+    //     setDocuments(res.data);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // };
+
+    // fetchDocsData();
+
+    // 날짜 변환 포함된 문서 목록 생성 -> 실제 연결시에는 dummyFiles를 documents로 변경
+    const formattedDocs = dummyFiles.data.map((file) => ({
+      id: file.id,
+      name: file.fileName,
+      date: formattedDate(file.uploadedAt),
+    }));
   }, []);
+
+  const formattedDate = (inputDate) => {
+    const date = new Date(inputDate);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
   const uploadDocument = () => {
     setIsModalOpen(true);
@@ -27,26 +77,13 @@ const DView = () => {
   };
 
   const handleViewResult = (docId) => {
-    navigate("/result");
-    // navigate(`/result/${docId}`);
+    if (docId) {
+      navigate("/result", { state: { docId } });
+      console.log("docId: ", docId);
+    } else {
+      console.log("조회 실패: 유효하지 않은 문서 ID");
+    }
   };
-
-  // const updateUploadedFiles = (uploadedFiles) => {
-  //   const today = new Date();
-  //   const day = String(today.getDate()).padStart(2, "0");
-  //   const month = String(today.getMonth() + 1).padStart(2, "0");
-  //   const year = today.getFullYear();
-  //   const formattedDate = `${day}/${month}/${year}`;
-
-  //   const newDocs = uploadedFiles.map((file, index) => ({
-  //     id: Date.now() + index,
-  //     name: file.name,
-  //     date: formattedDate,
-  //   }));
-
-  //   setDocuments((prev) => [...newDocs, ...prev]); // 새 파일 위에
-  //   closeModal();
-  // };
 
   return (
     <>
@@ -59,8 +96,7 @@ const DView = () => {
               <IoDocumentText />
               <h2>내 문서 목록 조회</h2>
             </div>
-
-            <button onClick={uploadDocument}> 문서 업로드</button>
+            <button onClick={uploadDocument}>문서 업로드</button>
           </div>
           <div className="content">
             <table className="table" role="table" aria-label="문서 목록">
@@ -83,7 +119,7 @@ const DView = () => {
                     <td>{doc.date}</td>
                     <td>
                       <button
-                        onClick={handleViewResult}
+                        onClick={() => handleViewResult(doc.id)}
                         className="checkResult"
                       >
                         조회
