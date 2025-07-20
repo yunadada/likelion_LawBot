@@ -26,7 +26,7 @@ const Login = () => {
             const accessToken = res.headers['authorization'];
 
             if (accessToken) {
-                localStorage.setItem("accessToken", res.data.data);
+                localStorage.setItem("accessToken", accessToken);
             navigate("/");
             } else {
                 alert("로그인에 실패했습니다. 정보를 다시 확인해주세요.");
