@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Highlighter from "react-highlight-words";
 import "./ResultLayout.css";
 import RiskClauseBlock from "../RiskClauseBlock/RiskClauseBlock";
 import EasyExplanationBlock from "../EasyExplanationBlock/EasyExplanationBlock";
