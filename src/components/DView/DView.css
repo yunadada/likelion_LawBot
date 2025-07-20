@@ -8,7 +8,7 @@
 .container {
   border-radius: 10px;
   background-color: white;
-  box-shadow: 0 14px 28px -5px #dfe1e6;
+  box-shadow: 0 14px 28px -5px #c4c2c2;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -27,8 +27,20 @@
   padding-bottom: 20px;
 }
 
-.title > h2 {
+.titleContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.titleContainer > svg {
+  font-size: 30px;
+  color: #4086f4;
+}
+
+.title h2 {
   margin: 0;
+  display: flex;
 }
 
 .title > button {
@@ -81,8 +93,8 @@
   border-bottom: 1px solid #d0d5dd;
 }
 
-.downloadButton {
-  padding-left: 18px;
+.checkResult {
+  padding-left: 16px;
   background-color: transparent;
   border: none;
   cursor: pointer;
