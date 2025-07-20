@@ -28,36 +28,36 @@ const ResultLayout = () => {
   const dummyRiskClauses = [
     {
       riskLevel: "위험도 낮음",
-      content: `계약의 사업관련 법률 시스템 조언`,
-      reason: "일방 당사자에게만 과도한 책임을 부과함",
-      legalBasis: "민법 제103조(반사회질서 법률행위)",
+      originalText: `계약의 사업관련 법률 시스템 조언`,
+      riskReason: "일방 당사자에게만 과도한 책임을 부과함",
+      legalReferences: "민법 제103조(반사회질서 법률행위)",
     },
     {
       riskLevel: "위험도 중간",
-      content: `"갑"은 지원하는 법률자문 위원이 "응"이 주관하는 프로젝트와 관련된 국가의 변 호사 자격증 또는 이에 준하는 경력을 보유한 자로 추천하여 투입하여야 하며 모든 경력을 합한 기간이 0년 이상이 되어야 한다.`,
-      reason: "일방 당사자에게만 과도한 책임을 부과함",
-      legalBasis: "민법 제103조(반사회질서 법률행위)",
+      originalText: `"갑"은 지원하는 법률자문 위원이 "응"이 주관하는 프로젝트와 관련된 국가의 변 호사 자격증 또는 이에 준하는 경력을 보유한 자로 추천하여 투입하여야 하며 모든 경력을 합한 기간이 0년 이상이 되어야 한다.`,
+      riskReason: "일방 당사자에게만 과도한 책임을 부과함",
+      legalReferences: "민법 제103조(반사회질서 법률행위)",
     },
     {
       riskLevel: "위험도 높음",
-      content: `"갑"은 본조의 보증을 위하여 관련 자격증 사본 등을 본 계약서 말미에 첨부하기로 하고 이에 대해 허위 또는 하자가 있을 시 그에 대한 모든 손해의 책임을 "갑"이 부담한다.`,
-      reason: "개인정보보호법 위반 가능성 있음",
-      legalBasis: "개인정보보호법 제17조(제3자 제공 제한)",
+      originalText: `"갑"은 본조의 보증을 위하여 관련 자격증 사본 등을 본 계약서 말미에 첨부하기로 하고 이에 대해 허위 또는 하자가 있을 시 그에 대한 모든 손해의 책임을 "갑"이 부담한다.`,
+      riskReason: "개인정보보호법 위반 가능성 있음",
+      legalReferences: "개인정보보호법 제17조(제3자 제공 제한)",
     },
   ];
 
   const dummyEasyExplanations = [
     {
       riskLevel: "위험도 중간",
-      content: "계약 기간 동안 계약을 해지할 경우 위약금을 지불해야 한다.",
-      easyExplanation: "계약을 중간에 끝내면 돈을 내야 해요.",
-      recommendedSentence: "계약 해지 사유에 따라 위약금이 조정될 수 있습니다.",
+      originalText: "계약 기간 동안 계약을 해지할 경우 위약금을 지불해야 한다.",
+      simpleExplanation: "계약을 중간에 끝내면 돈을 내야 해요.",
+      suggestedRevision: "계약 해지 사유에 따라 위약금이 조정될 수 있습니다.",
     },
     {
       riskLevel: "위험도 낮음",
-      content: "고객 정보는 마케팅 목적에 사용될 수 있습니다.",
-      easyExplanation: "내 정보가 광고에 쓰일 수 있어요.",
-      recommendedSentence: "개인정보는 동의한 범위 내에서만 활용됩니다.",
+      originalText: "고객 정보는 마케팅 목적에 사용될 수 있습니다.",
+      simpleExplanation: "내 정보가 광고에 쓰일 수 있어요.",
+      suggestedRevision: "개인정보는 동의한 범위 내에서만 활용됩니다.",
     },
   ];
 
@@ -89,6 +89,7 @@ const ResultLayout = () => {
 `;
 
   const renderComponent = () => {
+    console.log(dummyRiskClauses);
     switch (selectedIndex) {
       case 0:
         // 현재 더미 데이터 배열로 작성돼있어서 실제 연결시에는 riskClausese로 변경해야함.
@@ -103,7 +104,7 @@ const ResultLayout = () => {
       case 1:
         return dummyEasyExplanations.map((data, index) => (
           <EasyExplanationBlock
-            key={sentenceId}
+            key={data.sentenceId}
             {...data}
             index={index}
             riskLevelColorMap={riskLevelColorMap}
