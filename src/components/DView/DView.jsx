@@ -33,6 +33,13 @@ const DView = () => {
   };
 
   useEffect(() => {
+    // 날짜 변환 포함된 문서 목록 생성 -> 실제 연결시에는 dummyFiles를 documents로 변경
+    const formattedDocs = dummyFiles.data.map((file) => ({
+      id: file.id,
+      name: file.fileName,
+      date: formattedDate(file.uploadedAt),
+    }));
+
     setDocuments(formattedDocs);
 
     // 실제 요청
@@ -51,13 +58,6 @@ const DView = () => {
     // };
 
     // fetchDocsData();
-
-    // 날짜 변환 포함된 문서 목록 생성 -> 실제 연결시에는 dummyFiles를 documents로 변경
-    const formattedDocs = dummyFiles.data.map((file) => ({
-      id: file.id,
-      name: file.fileName,
-      date: formattedDate(file.uploadedAt),
-    }));
   }, []);
 
   const formattedDate = (inputDate) => {
