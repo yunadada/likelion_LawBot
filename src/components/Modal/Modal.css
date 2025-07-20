@@ -1,9 +1,12 @@
 .modalBackground {
+  width: 100%;
+  position: fixed;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
 }
 
 .modal {
@@ -67,7 +70,7 @@
   margin-bottom: 12px;
 }
 
-.selectFile > button {
+.selectFile > label {
   background-color: transparent;
   border: 1.2px solid #0162e8;
   border-radius: 10px;
@@ -75,6 +78,10 @@
   color: #0162e8;
   cursor: pointer;
   font-size: 12px;
+}
+
+.selectFile input {
+  display: none;
 }
 
 .docs {
