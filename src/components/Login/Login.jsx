@@ -16,22 +16,21 @@ const Login = () => {
 
         try {
             const res = await axios.post(
-                "http://서버주소/api/v1/auth/sign-in",
+                "http://localhost:8080/api/v1/auth/sign-in",
                 { email, password },
                 {
                     headers: { "Content-Type": "application/json" },
                 }
             );
 
-            const accessToken = res.headers['authorization'];
+            const accessToken = res.headers["authorization"];
 
             if (accessToken) {
                 localStorage.setItem("accessToken", accessToken);
-            navigate("/");
+                navigate("/");
             } else {
                 alert("로그인에 실패했습니다. 정보를 다시 확인해주세요.");
             }
-
         } catch (err) {
             alert("로그인에 실패했습니다. 정보를 다시 확인해주세요.");
         }
